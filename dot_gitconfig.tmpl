@@ -1,0 +1,76 @@
+[init]
+	defaultBranch = main
+
+[user]
+	name = Marcos Sader
+	email = xmarcos@gmail.com
+
+[core]
+	excludesfile = {{ .chezmoi.homedir }}/.gitignore
+  editor = subl -w
+
+[help]
+	autocorrect = 1
+
+[pull]
+	ff = only
+	rebase = false
+
+[alias]
+  # https://git-scm.com/docs/git-fetch#git-fetch--p
+  prune = fetch --prune
+
+  # https://git-scm.com/docs/git-reset#git-reset-emgitresetemltmodegtltcommitgt
+  undo = reset --soft HEAD^
+
+  # https://git-scm.com/docs/git-stash
+  stash-all = stash save --include-untracked
+
+  # https://git-scm.com/docs/git-log
+  # https://hackernoon.com/lesser-known-git-commands-151a1918a60
+  glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+
+  # https://hackernoon.com/lesser-known-git-commands-151a1918a60#e3c2
+  commend = commit --amend --no-edit --reset-author
+
+[merge]
+  # Note: this global option applies to all merges, including those done during a git pull
+  # https://git-scm.com/docs/git-config#git-config-mergeff
+  ff = only
+
+  # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
+  # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
+  conflictstyle = diff3
+
+[push]
+  # "push the current branch back to the branch whose changes are usually integrated into the current branch"
+  # "refuse to push if the upstream branch’s name is different from the local one"
+  # https://git-scm.com/docs/git-config#git-config-pushdefault
+  default = simple
+
+  # Because I get sick of telling git to do it manually
+  # https://git-scm.com/docs/git-config#git-config-pushfollowTags
+  followTags = true
+
+[status]
+  # Sometimes a newly-added folder, since it's only one line in git status, can slip under the radar.
+  # https://git-scm.com/docs/git-config#git-config-statusshowUntrackedFiles
+  showUntrackedFiles = all
+
+[transfer]
+  # To combat repository corruption!
+  # Note: this global option applies during receive and transmit
+  # https://git-scm.com/docs/git-config#git-config-transferfsckObjects
+  # via https://groups.google.com/forum/#!topic/binary-transparency/f-BI4o8HZW0
+  fsckobjects = true
+
+# A nice little github-like colorful, split diff right in the console.
+# via http://owen.cymru/github-style-diff-in-terminal-with-icdiff/
+[diff]
+  tool = icdiff
+
+[difftool]
+  prompt = false
+
+[difftool "icdiff"]
+  cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE

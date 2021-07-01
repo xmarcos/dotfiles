@@ -1,0 +1,38 @@
+# ----------------------------------
+# Global
+# ----------------------------------
+{{ if eq .chezmoi.os "darwin" -}}
+AddKeysToAgent yes
+{{ end -}}
+
+Host *
+  Compression yes
+  ControlMaster auto
+  ControlPath {{ .chezmoi.homedir }}/.ssh/tmp/ssh-%r@%h:%p
+  ControlPersist 10m
+  HashKnownHosts yes
+  IdentitiesOnly yes
+
+# ----------------------------------
+# Public
+# ----------------------------------
+Host github.com
+  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/github/github_rsa
+
+Host bitbucket.org
+  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/bitbucket/bitbucket_rsa
+
+Host bitbucket-olapic.org
+  HostName bitbucket.org
+  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/bitbucket/bitbucket-olapic_rsa
+
+# ----------------------------------
+# Private
+# ----------------------------------
+Host mbp.local
+  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/x/mini_rsa
+  User xmarcos
+
+Host mini.local
+  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/x/mbp_rsa
+  User xmarcos
