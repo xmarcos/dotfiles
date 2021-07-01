@@ -2,8 +2,8 @@
 	defaultBranch = main
 
 [user]
-	name = Marcos Sader
-	email = xmarcos@gmail.com
+	name = {{ .full_name }}
+	email = {{ .email }}
 
 [core]
 	excludesfile = {{ .chezmoi.homedir }}/.gitignore
