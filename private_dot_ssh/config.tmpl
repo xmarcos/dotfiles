@@ -1,11 +1,8 @@
-# ----------------------------------
-# Global
-# ----------------------------------
-{{ if eq .chezmoi.os "darwin" -}}
-AddKeysToAgent yes
-{{ end -}}
-
 Host *
+  {{- if eq .chezmoi.os "darwin" }}
+  AddKeysToAgent yes
+  UseKeychain yes
+  {{- end }}
   Compression yes
   ControlMaster auto
   ControlPath {{ .chezmoi.homedir }}/.ssh/tmp/ssh-%r@%h:%p

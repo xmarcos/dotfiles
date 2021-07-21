@@ -1,0 +1,9 @@
+# https://starship.rs/config/
+# Don't add a new line at the start of the prompt
+add_newline = false
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true

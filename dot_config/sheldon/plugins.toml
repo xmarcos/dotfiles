@@ -1,0 +1,35 @@
+shell = "zsh"
+
+[plugins.spaceship]
+github = "spaceship-prompt/spaceship-prompt"
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+apply = ["fpath", "defer"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.history-search-multi-word]
+github = 'zdharma/history-search-multi-word'
+apply = ["defer"]
+
+[plugins.z]
+github = "rupa/z"
+apply = ["defer"]
+
+[plugins.wifi-password]
+github = "rauchg/wifi-password"
+apply = ["defer"]
+
+[templates]
+defer = { value = 'zsh-defer source "{{ file }}"', each = true }

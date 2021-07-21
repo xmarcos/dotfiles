@@ -1,8 +1,9 @@
-default-key {{ .gpg_default_key }}
-no-greeting
-no-comments
-keyid-format 0xlong
-with-fingerprint
-require-cross-certification
 charset utf-8
+default-key {{ .gpg_default_key }}
+keyid-format 0xlong
 keyserver hkp://keys.gnupg.net
+no-comments
+no-greeting
+no-tty
+require-cross-certification
+with-fingerprint

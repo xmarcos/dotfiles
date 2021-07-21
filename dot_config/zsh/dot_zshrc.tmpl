@@ -1,0 +1,149 @@
+# shellcheck shell=bash disable=SC1090
+# https://github.com/koalaman/shellcheck/wiki/SC1090
+
+# secrets
+# ------------------------------------------------------------------------------
+if [ -r {{ .chezmoi.homedir }}/.secrets ]
+then
+  source {{ .chezmoi.homedir }}/.secrets
+fi
+
+
+# functions
+# ------------------------------------------------------------------------------
+# if type brew &>/dev/null; then
+#   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+# fi
+_exists() {
+  command -v "$1" > /dev/null 2>&1
+}
+# compresspdf INPUT OUTPUT QUALITY(printer|ebook)
+compresspdf() {
+  gs -sDEVICE=pdfwrite -dNOPAUSE -dQUIET -dBATCH -dPDFSETTINGS=/${3:-"ebook"} -dCompatibilityLevel=1.4 -sOutputFile="$2" "$1"
+}
+
+# locale
+# ------------------------------------------------------------------------------
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
+# path
+# ------------------------------------------------------------------------------
+# ensure available gnu_packages commands are listed before macos ones
+brew_prefix=$(brew --prefix)
+gnu_packages=(
+  coreutils
+  findutils
+  grep
+  gnu-sed
+  gnu-tar
+)
+for p in "${gnu_packages[@]}"; do
+  if [[ -d "$brew_prefix/opt/${p}" ]]; then
+    export PATH="$brew_prefix/opt/${p}/libexec/gnubin:$PATH"
+    export MANPATH="$brew_prefix/opt/${p}/libexec/gnuman:$MANPATH"
+  fi
+done
+unset gnu_packages
+unset brew_prefix
+
+# CD behaviours
+# ------------------------------------------------------------------------------
+# cd into a directory automatically by typing just the directory path
+setopt AUTO_CD
+# better pushd
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+
+# misc
+# ------------------------------------------------------------------------------
+# prompt to correct spelling mistakes
+setopt CORRECT
+# setopt CORRECT_ALL
+# make globbing case-insensitive on macos
+setopt NO_CASE_GLOB
+
+# zle wordchars fine tuning
+# ------------------------------------------------------------------------------
+# by the default, it includes all these chars:
+#    *?_-.[]~=/&;!#$%^(){}<>
+# I remove fwd slash, period, angle brackets and pound/hashtag to improve nav
+# of words/paths using ⎇←/→ and zle usage in general.
+# https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html
+
+if [[ -n $WORDCHARS ]]; then
+  export WORDCHARS=${WORDCHARS//[\/.<>#]}
+else
+  export WORDCHARS='*?_-[]~=&;!$%^(){}3'
+fi
+
+# pager
+# ------------------------------------------------------------------------------
+export PAGER='less'
+# less options
+less_opts=(
+  # Quit if entire file fits on first screen.
+  -FX
+  # Ignore case in searches that do not contain uppercase.
+  --ignore-case
+  # Allow ANSI colour escapes, but no other escapes.
+  --RAW-CONTROL-CHARS
+  # Quiet the terminal bell. (when trying to scroll past the end of the buffer)
+  --quiet
+  # Do not complain when we are on a dumb terminal.
+  --dumb
+)
+export LESS="${less_opts[*]}"
+
+# zsh completion
+# ------------------------------------------------------------------------------
+# "smart-case" path-completion and prefered order for matching strategies
+# https://zsh.sourceforge.io/Doc/Release/Completion-Widgets.html#Completion-Matching-Control
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+
+# turn on zsh completion engine
+autoload -Uz compinit && compinit
+
+# history
+# ------------------------------------------------------------------------------
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+# do not execute the last command automatically when using !!
+setopt HIST_VERIFY
+# share history across multiple zsh sessions
+setopt SHARE_HISTORY
+# append to history
+setopt APPEND_HISTORY
+# keep the date
+setopt EXTENDED_HISTORY
+# adds commands as they are typed (vs when shell exits)
+setopt INC_APPEND_HISTORY
+# do not store duplications
+setopt HIST_IGNORE_DUPS
+# expire duplicates first
+setopt HIST_EXPIRE_DUPS_FIRST
+#ignore duplicates when searching
+setopt HIST_FIND_NO_DUPS
+# removes blank lines from history
+setopt HIST_REDUCE_BLANKS
+# Some dup settings are redundant on purpose to handle existing HISTFILEs
+
+# aliases
+# ------------------------------------------------------------------------------
+for alias_file in "$ZDOTDIR/aliases/"*.zsh; do
+  source "$alias_file"
+done
+
+# keybindings
+# ------------------------------------------------------------------------------
+bindkey '^[[H' beginning-of-line      # fn ←
+bindkey '^[[F' end-of-line            # fn →
+bindkey '^[[1;9C' forward-word        # ⎇ ←
+bindkey '^[[1;9D' backward-word       # ⎇ →
+
+# TIP: to avoid having to install showkey -a to debug, run cat to see keyscodes
+
+# plugins and theme
+# ------------------------------------------------------------------------------
+eval "$(sheldon source)"
+eval "$(starship init zsh)"

@@ -1,0 +1,10 @@
+# shellcheck shell=bash disable=SC1090,SC1091
+
+# XDG setup
+export XDG_CONFIG_HOME="{{ .chezmoi.homedir }}/.config"
+export XDG_DATA_HOME="{{ .chezmoi.homedir }}/.local/share"
+export XDG_CACHE_HOME="{{ .chezmoi.homedir }}/.cache"
+
+# ZSH config
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+. "$ZDOTDIR/.zshenv"
