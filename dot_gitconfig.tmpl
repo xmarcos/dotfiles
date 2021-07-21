@@ -1,71 +1,34 @@
-[init]
-	defaultBranch = main
+[alias]
+  # amend last commit
+  amend = commit --amend
+  b = branch
+  c = commit
+  co = checkout
+  # list of contributors and how many commits each person has.
+  contrib = shortlog -sn
+  # dont complain about "git" when doing "git git cmd"
+  git = !git
+  # commits log with pretty format
+  l = log --all --graph --decorate --oneline
+  # long and detailed log
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  # commits log with statistic
+  ll = log --stat --abbrev-commit
+  st = status
+  # count how many lines in repo
+  stat = !git ls-files | xargs wc -l
 
-[user]
-	name = {{ .full_name }}
-	email = {{ .email }}
+[color]
+  ui = auto
+
+[commit]
+  gpgsign = true
 
 [core]
-	excludesfile = {{ .chezmoi.homedir }}/.gitignore
-  editor = subl -w
+  editor = vim
+  excludesfile = {{ .chezmoi.homedir }}/.config/git/.gitignore
+  ignorecase = false
 
-[help]
-	autocorrect = 1
-
-[pull]
-	ff = only
-	rebase = false
-
-[alias]
-  # https://git-scm.com/docs/git-fetch#git-fetch--p
-  prune = fetch --prune
-
-  # https://git-scm.com/docs/git-reset#git-reset-emgitresetemltmodegtltcommitgt
-  undo = reset --soft HEAD^
-
-  # https://git-scm.com/docs/git-stash
-  stash-all = stash save --include-untracked
-
-  # https://git-scm.com/docs/git-log
-  # https://hackernoon.com/lesser-known-git-commands-151a1918a60
-  glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-
-  # https://hackernoon.com/lesser-known-git-commands-151a1918a60#e3c2
-  commend = commit --amend --no-edit --reset-author
-
-[merge]
-  # Note: this global option applies to all merges, including those done during a git pull
-  # https://git-scm.com/docs/git-config#git-config-mergeff
-  ff = only
-
-  # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
-  # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
-  conflictstyle = diff3
-
-[push]
-  # "push the current branch back to the branch whose changes are usually integrated into the current branch"
-  # "refuse to push if the upstream branch’s name is different from the local one"
-  # https://git-scm.com/docs/git-config#git-config-pushdefault
-  default = simple
-
-  # Because I get sick of telling git to do it manually
-  # https://git-scm.com/docs/git-config#git-config-pushfollowTags
-  followTags = true
-
-[status]
-  # Sometimes a newly-added folder, since it's only one line in git status, can slip under the radar.
-  # https://git-scm.com/docs/git-config#git-config-statusshowUntrackedFiles
-  showUntrackedFiles = all
-
-[transfer]
-  # To combat repository corruption!
-  # Note: this global option applies during receive and transmit
-  # https://git-scm.com/docs/git-config#git-config-transferfsckObjects
-  # via https://groups.google.com/forum/#!topic/binary-transparency/f-BI4o8HZW0
-  fsckobjects = true
-
-# A nice little github-like colorful, split diff right in the console.
-# via http://owen.cymru/github-style-diff-in-terminal-with-icdiff/
 [diff]
   tool = icdiff
 
@@ -74,3 +37,44 @@
 
 [difftool "icdiff"]
   cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+
+[gpg]
+  program = gpg
+
+[help]
+	autocorrect = 1
+
+[init]
+  defaultBranch = main
+
+[pull]
+	ff = only
+	rebase = false
+
+[push]
+  default = current
+  followTags = true
+
+[status]
+  showUntrackedFiles = all
+
+[tag]
+  forceSignAnnotated = true
+
+[transfer]
+  # https://git-scm.com/docs/git-config#Documentation/git-config.txt-transferfsckObjects
+  fsckobjects = true
+
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "git://github.com/"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "https://github.com/"
+
+[url "git://github.com/"]
+  insteadOf = "github:"
+
+[user]
+  email = {{ .email }}
+  name = {{ .full_name }}
+  signingkey = {{ .gpg_default_key }}
