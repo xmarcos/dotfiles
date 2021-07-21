@@ -1,0 +1,59 @@
+" Set utf8 as standard encoding
+set encoding=utf8
+
+" use spaces instead of tabs
+set expandtab
+
+" no dumb tabs :)
+set smarttab
+
+" 1 tab == 2 spaces, obviously
+set shiftwidth=2
+set tabstop=2
+
+" show line numbers
+set number
+
+" show row and column ruler information
+" set ruler
+
+" enable syntax highlighting
+syntax on
+
+" ignore case when searching
+set ignorecase
+
+" detect if case-sensitive based on input pattern
+set smartcase
+
+" highlight search results
+set hlsearch
+
+" highlight possible matches as you type
+set incsearch
+
+" show matching brackets when text indicator is over them
+set showmatch
+
+" auto indent
+set autoindent
+
+" smart indent
+set smartindent
+
+" wrap lines
+set wrap
+
+" always show the status line
+set laststatus=2
+
+" format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+" returns true if paste mode is enabled
+function! HasPaste()
+  if &paste
+    return 'PASTE MODE  '
+  endif
+  return ''
+endfunction
