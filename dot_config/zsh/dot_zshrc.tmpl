@@ -140,10 +140,14 @@ bindkey '^[[H' beginning-of-line      # fn ←
 bindkey '^[[F' end-of-line            # fn →
 bindkey '^[[1;9C' forward-word        # ⎇ ←
 bindkey '^[[1;9D' backward-word       # ⎇ →
-
 # TIP: to avoid having to install showkey -a to debug, run cat to see keyscodes
 
-# plugins and theme
+# volta — https://docs.volta.sh/advanced/installers#skipping-volta-setup
+# ------------------------------------------------------------------------------
+export VOLTA_HOME="$XDG_CONFIG_HOME/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# plugins
 # ------------------------------------------------------------------------------
 eval "$(sheldon source)"
 
