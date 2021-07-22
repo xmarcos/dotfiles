@@ -1,0 +1,6 @@
+#! /bin/bash
+# alias: brew r
+#:  * `r` [args...]
+#:    `brew r` is an alias for `brew remove`
+brew remove $*
+
