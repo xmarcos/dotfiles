@@ -33,3 +33,9 @@ Host mbp.local
 Host mini.local
   IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/x/mbp_rsa
   User xmarcos
+
+Host meli
+  HostName {{ (bitwardenFields "item" "meli-mbp-2021").hostname.value -}}.local
+  HostName {{ (bitwardenFields "item" "meli-mbp-2021").ip.value }}
+  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/x/meli_ed25519
+  User {{ (bitwardenFields "item" "meli-mbp-2021").username.value }}
