@@ -3068,6 +3068,10 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>findRegex_iTerm</key>
-	<false/>
+  <false/>
+  <key>kCPKSelectionViewPreferredModeKey</key>
+  <integer>0</integer>
+  <key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+  <false/>
 </dict>
 </plist>
