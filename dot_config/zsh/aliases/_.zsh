@@ -24,3 +24,5 @@ if _exists code; then
 else
   alias e='$EDITOR'
 fi
+
+alias unlockbw='export BW_SESSION=$(bw unlock --raw) && bw unlock --check'
