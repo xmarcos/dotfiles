@@ -18,6 +18,9 @@
   # count how many lines in repo
   stat = !git ls-files | xargs wc -l
 
+[branch]
+  autosetupmerge = always
+
 [color]
   ui = auto
 
@@ -46,6 +49,10 @@
 
 [init]
   defaultBranch = main
+
+[merge]
+  ff = no
+  commit = no
 
 [pull]
 	ff = only
