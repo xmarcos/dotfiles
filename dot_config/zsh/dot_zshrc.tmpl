@@ -3,9 +3,9 @@
 
 # secrets
 # ------------------------------------------------------------------------------
-if [ -r {{ .chezmoi.homedir }}/.secrets ]
+if [ -r {{ .chezmoi.homeDir }}/.secrets ]
 then
-  source {{ .chezmoi.homedir }}/.secrets
+  source {{ .chezmoi.homeDir }}/.secrets
 fi
 
 

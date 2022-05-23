@@ -5,7 +5,7 @@ Host *
   {{- end }}
   Compression yes
   ControlMaster auto
-  ControlPath {{ .chezmoi.homedir }}/.ssh/tmp/ssh-%r@%h:%p
+  ControlPath {{ .chezmoi.homeDir }}/.ssh/tmp/ssh-%r@%h:%p
   ControlPersist 10m
   HashKnownHosts yes
   IdentitiesOnly yes
@@ -14,28 +14,28 @@ Host *
 # Public
 # ----------------------------------
 Host github.com
-  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/github/github_rsa
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/keys/github/github_rsa
 
 Host bitbucket.org
-  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/bitbucket/bitbucket_rsa
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/keys/bitbucket/bitbucket_rsa
 
 Host bitbucket-olapic.org
   HostName bitbucket.org
-  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/bitbucket/bitbucket-olapic_rsa
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/keys/bitbucket/bitbucket-olapic_rsa
 
 # ----------------------------------
 # Private
 # ----------------------------------
 Host mbp.local
-  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/x/mini_rsa
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/keys/x/mini_rsa
   User xmarcos
 
 Host mini.local
-  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/x/mbp_rsa
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/keys/x/mbp_rsa
   User xmarcos
 
 Host meli
   HostName {{ (bitwardenFields "item" "meli-mbp-2021").hostname.value -}}.local
   HostName {{ (bitwardenFields "item" "meli-mbp-2021").ip.value }}
-  IdentityFile {{ .chezmoi.homedir }}/.ssh/keys/x/meli_ed25519
+  IdentityFile {{ .chezmoi.homeDir }}/.ssh/keys/x/meli_ed25519
   User {{ (bitwardenFields "item" "meli-mbp-2021").username.value }}
