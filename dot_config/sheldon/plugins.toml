@@ -3,6 +3,9 @@ shell = "zsh"
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 
+[templates]
+defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
@@ -28,5 +31,3 @@ apply = ["defer"]
 github = "rauchg/wifi-password"
 apply = ["defer"]
 
-[templates]
-defer = { value = 'zsh-defer source "{{ file }}"', each = true }
