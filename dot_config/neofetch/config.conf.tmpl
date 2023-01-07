@@ -26,7 +26,7 @@ print_info() {
 
     info "Locale" locale
     info "Public IP" public_ip
-    prin "Weather" "$(curl "https://wttr.in/${NEOFETCH_WEATHER_LOCATION}?format=3")"
+    prin "Weather" "$(curl -s "https://wttr.in/?format=3")"
 
     info cols
 }
