@@ -1,36 +1,40 @@
-# install brew
+# dotfiles
+
+## install brew
+
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-# make zsh the default shell
+## setup mac
+
 ```bash
-chsh -s /bin/zsh
+# ensure we have a modern bash
+brew install bash
+# setup macos
+./_setup/macos.sh
 ```
 
-# install basic tools
+## install basic tools
+
 ```bash
 brew bundle install --file=_setup/brewfile.init
 ```
 
-# configure iTerm
-```bash
-defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "/Users/xmarcos/.config/iterm2"
-```
+## unlock bw vault
 
-# unlock bw vault
 ```bash
 export BW_SESSION=$(bw unlock --raw) && bw unlock --check
 ```
 
-# init
+## init
+
 ```bash
 chezmoi init
 chezmoi init git@github.com:xmarcos/dotfiles.git
 ```
 
-# post-init tasks
+## post-init tasks
 
 ```bash
 # restore brew aliases
@@ -42,3 +46,12 @@ done
 # install rest of the apps
 brew bundle install --file=_setup/brewfile.plus
 ```
+
+## TODO
+
+- Use <https://github.com/kcrawford/dockutil> to ensure consisten dock icons on fresh start.
+- Automate folder icons <https://github.com/krestaino/macos-folder-icons> (replacement for <https://img2icnsapp.com/>)
+- <https://github.com/kevinSuttle/macOS-Defaults/blob/master/REFERENCE.md>
+- Fix QL PLugins:
+  - <https://github.com/anthonygelibert/QLColorCode/issues/51#issuecomment-572932925>
+  - <https://hargitai.co.nz/quicklook-plugin-qlgenerator-cant-be-opened-because-apple-cannot-check-it-for-malicious-software-fix-locally/>
