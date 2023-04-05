@@ -28,8 +28,10 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
-# path
+# Homebrew PATHs (for Apple Silicon mac)
 # ------------------------------------------------------------------------------
+# make brew available
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # ensure available gnu_packages commands are listed before macos ones
 brew_prefix=$(brew --prefix)
 gnu_packages=(
