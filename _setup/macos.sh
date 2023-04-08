@@ -101,9 +101,6 @@ defaults write com.apple.systempreferences "NSQuitAlwaysKeepsWindows" -bool fals
 # disable time maching prompt
 defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool true
 
-# disable iTunes ability to listen to media keys
-launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
-
 # require password immediately after sleep or screen saver begins
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
@@ -114,17 +111,11 @@ defaults write NSGlobalDomain "AppleMetricUnits" -bool true
 defaults write NSGlobalDomain "NSAutomaticCapitalizationEnabled" -bool false
 
 # three finger drag (built-in trackpad)
-defaults write com.apple.AppleMultitouchTrackpad Clicking -int 1
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -int 1
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -int 0
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -int 0
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 0
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
 # three finger drag (bt trackpad)
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 1
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -int 1
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -int 0
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -int 0
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 0
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
 
 # turn off universal clipboard
 defaults delete ~/Library/Preferences/com.apple.coreservices.useractivityd.plist
